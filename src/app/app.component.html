@@ -1,0 +1,11 @@
+<table>
+  <tr>
+    <th> Имя пользователя</th>
+    <th> Возраст пользователя</th>  
+  </tr>
+  <tr *ngFor = "let user of users">
+    <td> {{user?.name}}</td>
+    <td>{{user?.age}}</td>
+  </tr>
+
+</table>
