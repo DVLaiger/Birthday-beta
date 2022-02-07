@@ -1,11 +1,9 @@
-<table>
-  <tr>
+<table class="demotable">
+    <th> Номер п/п</th>
     <th> Имя пользователя</th>
     <th> Возраст пользователя</th>  
-  </tr>
   <tr *ngFor = "let user of users">
     <td> {{user?.name}}</td>
-    <td>{{user?.age}}</td>
+    <td> {{user?.age}}</td>
   </tr>
-
 </table>
