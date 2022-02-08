@@ -1,13 +1,14 @@
 <input type="button" value="Добавить" class="btn btn-default" (click)="addUser()" />
-<table >
+<table>
   <thead>
     <tr>
+      <td>Номер по порядку</td>
       <td>id пользователя</td>
       <td>Имя пользователя</td>
       <td>Возраст пользователя</td>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="demotable">
     <tr *ngFor="let user of users" >
       <ng-template [ngTemplateOutlet]="loadTemplate(user)" 
       [ngTemplateOutletContext]="{ $implicit: user}">

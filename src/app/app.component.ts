@@ -1,86 +1,83 @@
-import { Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import { UserService} from './user.service';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { UserService } from './user.service';
 import { User } from './user';
-   
+
 @Component({
-    selector: 'my-app',
-    templateUrl: './app.component.html',
-    styleUrls: [ './app.component.css' ],
-    providers: [UserService]
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers: [UserService],
 })
-export class AppComponent implements OnInit { 
-   
-    @ViewChild('readOnlyTemplate') readOnlyTemplate: TemplateRef<any>;
-    @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
+export class AppComponent implements OnInit {
+  @ViewChild('readOnlyTemplate') readOnlyTemplate: TemplateRef<any>;
+  @ViewChild('editTemplate') editTemplate: TemplateRef<any>;
 
-    editedUser: User|null = null;
-    users: Array<User>;
-    isNewRecord: boolean;
-    statusMessage: string;
-     
-    constructor(private http: UserService){
-        this.users = new Array<User>();
-    }
-      
-    ngOnInit(){
-         
-        this.loadUser()
-    }
+  editedUser: User | null = null;
+  users: Array<User>;
+  isNewRecord: boolean;
+  statusMessage: string;
 
-    private loadUser() {
-        this.http.getUser().subscribe((data: any) => this.users=data["userList"]);
-    }
+  constructor(private http: UserService) {
+    this.users = new Array<User>();
+  }
 
-    addUser() {
-        this.editedUser = new User(0,"",0);
-        this.users.push(this.editedUser);
-        this.isNewRecord = true;
-    }
+  ngOnInit() {
+    this.loadUser();
+  }
 
-    editUser(user: User) {
-        this.editedUser = new User (user.id, user.name, user.age)
-    }
+  private loadUser() {
+    this.http
+      .getUser()
+      .subscribe((data: any) => (this.users = data['workers']));
+  }
 
-    loadTemplate(user: User) {
-        if (this.editedUser && this.editedUser.id === user.id) {
-            return this.editTemplate;
-        } else {
-            return this.readOnlyTemplate;
-        }
-    }
+  addUser() {
+    this.editedUser = new User(0, '', 0);
+    this.users.push(this.editedUser);
+    this.isNewRecord = true;
+  }
 
-    saveUser() {
-        if (this.isNewRecord) {
-            // добавляем пользователя
-            this.http.createUser(this.editedUser as User).subscribe(data => {
-                this.statusMessage = 'Данные успешно добавлены',
-                this.loadUser();
-            });
-            this.isNewRecord = false;
-            this.editedUser = null;
-        } else {
-            // изменяем пользователя
-            this.http.updateUser(this.editedUser as User).subscribe(data => {
-                this.statusMessage = 'Данные успешно обновлены',
-                this.loadUser();
-            });
-            this.editedUser = null;
-        }
-    }
+  editUser(user: User) {
+    this.editedUser = new User(user.id, user.name, user.age);
+  }
 
-    cancel() {
-        // если отмена при добавлении, удаляем последнюю запись
-        if (this.isNewRecord) {
-            this.users.pop();
-            this.isNewRecord = false;
-        }
-        this.editedUser = null;
+  loadTemplate(user: User) {
+    if (this.editedUser && this.editedUser.id === user.id) {
+      return this.editTemplate;
+    } else {
+      return this.readOnlyTemplate;
     }
-    // удаление пользователя
-    deleteUser(user: User) {
-        this.http.deleteUser(user.id).subscribe(data => {
-            this.statusMessage = 'Данные успешно удалены',
-            this.loadUser();
-        });
+  }
+
+  saveUser() {
+    if (this.isNewRecord) {
+      // добавляем пользователя
+      this.http.createUser(this.editedUser as User).subscribe((data) => {
+        (this.statusMessage = 'Данные успешно добавлены'), this.loadUser();
+      });
+      this.isNewRecord = false;
+      this.editedUser = null;
+    } else {
+      // изменяем пользователя
+      this.http.updateUser(this.editedUser as User).subscribe((data) => {
+        (this.statusMessage = 'Данные успешно обновлены'), this.loadUser();
+      });
+      this.editedUser = null;
     }
+  }
+
+  cancel() {
+    // если отмена при добавлении, удаляем последнюю запись
+    if (this.isNewRecord) {
+      this.users.pop();
+      this.isNewRecord = false;
+    }
+    this.editedUser = null;
+  }
+  // удаление пользователя
+  deleteUser(user: User) {
+    this.http.deleteUser(user.id).subscribe((data) => {
+      (this.statusMessage = 'Данные успешно удалены'), this.loadUser();
+    });
+  }
 }
