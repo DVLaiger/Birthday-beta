@@ -1,4 +1,4 @@
-<input type="button" value="Добавить" class="btn btn-default" (click)="addUser()" />
+<input type="button" value="Добавить" class="btn btn-default" (click)="addWorker()" />
 <table>
   <thead>
     <tr>
@@ -19,35 +19,35 @@
 
 </table>
 
-<ng-template #readOnlyTemplate let-user>
-<td>{{user.id}}</td>
-<td>{{user.fio}}</td>
-<td>{{user.day}}</td>
-<td>{{user.month}}</td>
+<ng-template #readOnlyTemplate let-worker>
+<td>{{worker.id}}</td>
+<td>{{worker.fio}}</td>
+<td>{{worker.day}}</td>
+<td>{{worker.month}}</td>
 <td>
-    <input type="button" value="Изменить" class="btn btn-default" (click)="editUser(user)" />
+    <input type="button" value="Изменить" class="btn btn-default" (click)="editWorker(worker)" />
 </td>
 <td>
-    <input type="button" value="Удалить" (click)="deleteUser(user)" class="btn btn-danger" />
+    <input type="button" value="Удалить" (click)="deleteWorker(worker)" class="btn btn-danger" />
 </td>
 </ng-template>
 
 <!--шаблон для редактирования-->
 <ng-template #editTemplate>
 <td>
-    <input type="number" [(ngModel)]="editedUser.id" readonly disabled class="form-control" />
+    <input type="number" [(ngModel)]="editedWorker.id" readonly disabled class="form-control" />
 </td>
 <td>
-    <input type="text" [(ngModel)]="editedUser.fio" class="form-control" />
+    <input type="text" [(ngModel)]="editedWorker.fio" class="form-control" />
 </td>
 <td>
-    <input type="number" [(ngModel)]="editedUser.day" class="form-control" />
+    <input type="number" [(ngModel)]="editedWorker.day" class="form-control" />
 </td>
 <td>
-  <input type="number" [(ngModel)]="editedUser.month" class="form-control" />
+  <input type="number" [(ngModel)]="editedWorker.month" class="form-control" />
 </td>
 <td>
-    <input type="button" value="Сохранить" (click)="saveUser()" class="btn btn-success" />
+    <input type="button" value="Сохранить" (click)="saveWorker()" class="btn btn-success" />
 </td>
 <td>
     <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
