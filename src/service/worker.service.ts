@@ -13,16 +13,24 @@ export class WorkerService {
 
   createWorker(worker: Worker){
     const myHeaders = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.post<Worker>(JSON.stringify(worker), {headers: myHeaders});
+    return this.http.post<Worker>('http://localhost:8081/worker/create',JSON.stringify(worker), {headers: myHeaders});
   }
 
   updateWorker(worker: Worker) {
     const myHeaders = new HttpHeaders().set("Content-Type", "application/json");
-    return this.http.put<Worker>(JSON.stringify(worker), {headers:myHeaders});
+    return this.http.post<Worker>('http://localhost:8081/worker/update',JSON.stringify(worker), {headers:myHeaders});
   }
 
   deleteWorker(id: number){
-    return this.http.delete<Worker>('/' + id);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        id: id,
+      },
+    };
+    return this.http.delete('http://localhost:8081/worker/delete', options);
   }
 
 }
