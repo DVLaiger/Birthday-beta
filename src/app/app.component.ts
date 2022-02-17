@@ -1,11 +1,12 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Users } from '../assets/users.json';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [UserService],
   
 })
 export class AppComponent implements OnInit {
@@ -13,12 +14,15 @@ export class AppComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   displayedColumns = ['id', 'name', 'age'];
 
-  constructor() {}
+  constructor (private http: UserService) {} 
 
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource();
-    this.dataSource.data = Users
+    this.loadUsers ();
+  }
+
+  private loadUsers() {
+    this.http.getUser().subscribe((data: MatTableDataSource<any>)=> this.dataSource = data ["Users"])
   }
 
 }  
