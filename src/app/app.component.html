@@ -1,50 +1,28 @@
-<input type="button" value="Добавить" class="btn btn-default" (click)="addUser()" />
-<table>
-  <thead>
-    <tr>
-      <td>Номер по порядку</td>
-      <td>id пользователя</td>
-      <td>Имя пользователя</td>
-      <td>Возраст пользователя</td>
-    </tr>
-  </thead>
-  <tbody class="demotable">
-    <tr *ngFor="let user of users" >
-      <ng-template [ngTemplateOutlet]="loadTemplate(user)" 
-      [ngTemplateOutletContext]="{ $implicit: user}">
-      </ng-template>
-    </tr>
-  </tbody>
-  
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let user"> {{user.id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="age">
+    <th mat-header-cell *matHeaderCellDef> age </th>
+    <td mat-cell *matCellDef="let user"> {{user.age}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<ng-template #readOnlyTemplate let-user>
-<td>{{user.id}}</td>
-<td>{{user.name}}</td>
-<td>{{user.age}}</td>
-<td>
-    <input type="button" value="Изменить" class="btn btn-default" (click)="editUser(user)" />
-</td>
-<td>
-    <input type="button" value="Удалить" (click)="deleteUser(user)" class="btn btn-danger" />
-</td>
-</ng-template>
-
-<!--шаблон для редактирования-->
-<ng-template #editTemplate>
-<td>
-    <input type="number" [(ngModel)]="editedUser._id" readonly disabled class="form-control" />
-</td>
-<td>
-    <input type="text" [(ngModel)]="editedUser.name" class="form-control" />
-</td>
-<td>
-    <input type="number" [(ngModel)]="editedUser.age" class="form-control" />
-</td>
-<td>
-    <input type="button" value="Сохранить" (click)="saveUser()" class="btn btn-success" />
-</td>
-<td>
-    <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
-</td>
-</ng-template>
